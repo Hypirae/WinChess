@@ -1,30 +1,30 @@
 #include "stdafx.h"
 
-Chess::Board::Board::Board ()
+Chess::Board::Board ()
 {
 	_x = CHESS_BOARD_X;
 	_y = CHESS_BOARD_Y;
-	_board = std::array<std::optional<Chess::Piece::Piece>, CHESS_BOARD_AREA>{};
+	_board = std::array<std::optional<Piece>, CHESS_BOARD_AREA>{};
 
-	fromFEN ( STARTING_FEN );
+	fromFEN ( StartingFEN );
 }
 
-Chess::Board::Board::Board ( const std::string& const fen )
+Chess::Board::Board ( std::string& fen )
 {
 	_x = CHESS_BOARD_X;
 	_y = CHESS_BOARD_Y;
-	_board = std::array<std::optional<Chess::Piece::Piece>, CHESS_BOARD_AREA>{};
+	_board = std::array<std::optional<Piece>, CHESS_BOARD_AREA>{};
 
 	fromFEN ( fen );
 }
 
-std::string Chess::Board::Board::toFEN ()
+std::string Chess::Board::toFEN ()
 {
 	std::string fen{};
 	int squares = 0;
 	int empties = 0;
 
-	std::for_each ( _board.begin (), _board.end (), [this, &fen, &squares, &empties] ( std::optional<Chess::Piece::Piece> square )
+	std::for_each ( _board.begin (), _board.end (), [this, &fen, &squares, &empties] ( std::optional<Piece> square )
 					{
 						if ( squares == 8 )
 						{
@@ -46,7 +46,7 @@ std::string Chess::Board::Board::toFEN ()
 								empties = 0;
 							}
 
-							Chess::Piece::Piece p = square.value ();
+							Piece p = square.value ();
 							const char c = static_cast< char >( p );
 
 							fen.append ( std::string{ c } );
@@ -65,9 +65,9 @@ std::string Chess::Board::Board::toFEN ()
 	return fen;
 }
 
-void Chess::Board::Board::fromFEN ( const std::string& const fen )
+void Chess::Board::fromFEN ( std::string& fen )
 {
-	std::array<std::optional<Chess::Piece::Piece>, 64> board{};
+	std::array<std::optional<Piece>, 64> board{};
 	int i = 0;
 
 	std::for_each ( fen.begin (), fen.end (), [&board, &i] ( const char& c )
@@ -86,7 +86,7 @@ void Chess::Board::Board::fromFEN ( const std::string& const fen )
 							case 'Q':
 							case 'k':
 							case 'K':
-								board[ i ] = Chess::Piece::FENToPiece ( c );
+								board[ i ] = Chess::PieceUtil::FENToPiece ( c );
 								break;
 							case '1':
 							case '2':
@@ -110,4 +110,9 @@ void Chess::Board::Board::fromFEN ( const std::string& const fen )
 					} );
 
 	_board = board;
+}
+
+std::array<std::optional<Chess::Piece>, CHESS_BOARD_AREA>& Chess::Board::getBoard ()
+{
+	return _board;
 }

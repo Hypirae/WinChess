@@ -7,23 +7,22 @@
 
 namespace Chess
 {
-	namespace Board
+	static std::string StartingFEN = STARTING_FEN;
+
+	class Board
 	{
-		class Board
-		{
-		public:
-			Board ();
-			Board ( const std::string& const fen );
+	public:
+		Board ();
+		Board ( std::string& fen );
 
-			std::string toFEN ();
-			void fromFEN ( const std::string& const fen );
-			
+		std::string toFEN ();
+		void fromFEN ( std::string& fen );
+		std::array<std::optional<Piece>, CHESS_BOARD_AREA>& getBoard ();
 
-		private:
-			short _x;
-			short _y;
+	private:
+		short _x;
+		short _y;
 
-			std::array<std::optional<Chess::Piece::Piece>, CHESS_BOARD_AREA> _board;
-		};
-	}
+		std::array<std::optional<Piece>, CHESS_BOARD_AREA> _board;
+	};
 }

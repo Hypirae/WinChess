@@ -12,5 +12,7 @@
 #include <assert.h>
 #endif // _DEBUG
 
+#include "Console.h"
 #include "Piece.h"
 #include "Chess.h"
+#include "Terminal.h"

@@ -1,44 +1,47 @@
 #include "stdafx.h"
 
-const std::string& const Chess::Piece::pieceToFEN(Chess::Piece::Piece piece)
+std::string Chess::PieceUtil::pieceToFEN(Piece piece)
 {
-	return std::string{ static_cast< char >( piece ) };
+	auto fen = std::string{ static_cast< char >( piece ) };
+	return fen;
 }
 
-Chess::Piece::Piece Chess::Piece::FENToPiece ( const char fen )
+Chess::Piece Chess::PieceUtil::FENToPiece ( const char fen )
 {
 	switch ( fen )
 	{
 		case 'p':
 		case 'P':
-			return ( fen == 'P' ) ? Chess::Piece::Piece::WhitePawn : Chess::Piece::Piece::BlackPawn;
+			return ( fen == 'P' ) ? Piece::WhitePawn : Piece::BlackPawn;
 			break;
 		case 'r':
 		case 'R':
-			return ( fen == 'R' ) ? Chess::Piece::Piece::WhiteRook : Chess::Piece::Piece::BlackRook;
+			return ( fen == 'R' ) ? Piece::WhiteRook : Piece::BlackRook;
 			break;
 		case 'n':
 		case 'N':
-			return ( fen == 'N' ) ? Chess::Piece::Piece::WhiteKnight : Chess::Piece::Piece::BlackKnight;
+			return ( fen == 'N' ) ? Piece::WhiteKnight : Piece::BlackKnight;
 			break;
 		case 'b':
 		case 'B':
-			return ( fen == 'B' ) ? Chess::Piece::Piece::WhiteBishop : Chess::Piece::Piece::BlackBishop;
+			return ( fen == 'B' ) ? Piece::WhiteBishop : Piece::BlackBishop;
 			break;
 		case 'q':
 		case 'Q':
-			return ( fen == 'Q' ) ? Chess::Piece::Piece::WhiteQueen : Chess::Piece::Piece::BlackQueen;
+			return ( fen == 'Q' ) ? Piece::WhiteQueen : Piece::BlackQueen;
 			break;
 		case 'k':
 		case 'K':
-			return ( fen == 'K' ) ? Chess::Piece::Piece::WhiteKing : Chess::Piece::Piece::BlackKing;
+			return ( fen == 'K' ) ? Piece::WhiteKing : Piece::BlackKing;
 			break;
+		default:
+			return Piece::None;
 	}
 }
 
-Chess::Piece::Piece Chess::Piece::FENToPiece ( const std::string& const fen )
+Chess::Piece Chess::PieceUtil::FENToPiece ( std::string& fen )
 {
 	char fenc = static_cast< char >( fen[ 0 ] );
 
-	return Chess::Piece::FENToPiece ( fenc );
+	return Chess::PieceUtil::FENToPiece ( fenc );
 }
