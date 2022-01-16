@@ -91,7 +91,6 @@ void Chess::Terminal::drawBoard ( Board board )
 						if ( piece.has_value () )
 						{
 							std::string fen = PieceUtil::pieceToFEN ( piece.value () );
-							auto fg = getFgColor ( i, piece.value () );
 
 							if ( fen == "\0" )
 							{
